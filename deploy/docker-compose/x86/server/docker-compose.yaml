@@ -1,0 +1,49 @@
+version: v3
+networks:
+  pathim_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.26.0/24
+services:
+  # ------------- path-im-server ------------- #
+  msggateway-wsrpc:
+    image: registry.cn-shanghai.aliyuncs.com/pathim/msggateway-wsrpc:v1.0.0-x86_64
+    environment:
+      - POD_IP=172.26.26.1
+      - POD_NAME=msggateway-wsrpc
+    restart: always
+    ports:
+      - "10001:8080"
+      - "11000:9090"
+    volumes:
+      - ./msggateway-rpc.yaml:/app/etc/msggateway-rpc.yaml
+      - ./msggateway-ws.yaml:/app/etc/msggateway-ws.yaml
+    networks:
+      pathim_net:
+        ipv4_address: 172.26.26.1
+  msgpush-rpc:
+    image: registry.cn-shanghai.aliyuncs.com/pathim/msgpush-rpc:v1.0.0-x86_64
+    ports:
+      - "10002:8080"
+    environment:
+      - POD_IP=172.26.26.2
+      - POD_NAME=msgpush-rpc
+    restart: always
+    volumes:
+      - ./msgpush-rpc.yaml:/app/etc/msgpush.yaml
+    networks:
+      pathim_net:
+        ipv4_address: 172.26.26.2
+  msgtransfer-history-cassandra:
+    image: registry.cn-shanghai.aliyuncs.com/pathim/msgtransfer-history-cassandra:v1.0.0-x86_64
+    environment:
+      - POD_IP=172.26.26.4
+      - POD_NAME=msgtransfer-history-cassandra
+    restart: always
+    volumes:
+      - ./msgtransfer-history-cassandra.yaml:/app/etc/history.yaml
+    networks:
+      pathim_net:
+        ipv4_address: 172.26.26.4
+  # ============= path-im-server ============= #

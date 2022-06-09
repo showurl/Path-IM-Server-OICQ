@@ -1,0 +1,120 @@
+syntax = "proto3";
+option go_package = "./pb";
+
+package pbChat;
+
+
+message PullMsgBySeqListReq{
+  repeated uint32 seqList = 1;
+  string userID = 2;
+}
+
+message PullMsgByGroupSeqListReq {
+  string groupID = 1;
+  repeated uint32 seqList = 2;
+}
+message PullMsgListResp {
+  repeated MsgData list = 1;
+  int32 errCode = 2;
+  string errMsg = 3;
+}
+
+message MsgData {
+  string clientMsgID = 1;
+  string serverMsgID = 2;
+  uint32 conversationType = 3;
+  string sendID = 4;
+  string receiveID = 5;
+  uint32 contentType = 6;
+  bytes content = 7;
+  repeated string atUserIDList = 8;
+  int64 clientTime = 9;
+  int64 serverTime = 10;
+  uint32 seq = 11;
+  OfflinePush offlinePush = 12;
+  MsgOptions msgOptions = 13;
+}
+message OfflinePush{
+  string title = 1;
+  string desc = 2;
+  string ex = 3;
+  string iOSPushSound = 4;
+  bool iOSBadgeCount = 5;
+}
+message MsgOptions{
+  bool persistent = 1;
+  bool history = 2;
+  bool local = 3;
+  bool updateUnreadCount = 4;
+  bool updateConversation = 5;
+  // server端控制
+  bool needBeFriend = 6;
+  bool offlinePush = 7;
+  bool senderSync = 8;
+}
+
+message MsgDataToMQ{
+  string traceId = 1;
+  MsgData msgData = 2;
+}
+
+message MsgDataToDB {
+  string traceId = 1;
+  MsgData msgData = 2;
+
+}
+message PushMsgDataToMQ{
+  string traceId = 1;
+  MsgData msgData = 2;
+  repeated string pushToUserID = 3;
+}
+
+message GetMinAndMaxSeqReq {
+  string userID = 1;
+}
+
+message GetMinAndMaxSeqResp {
+  uint32 MinSeq = 1;
+  uint32 MaxSeq = 2;
+  uint32 ErrCode = 3;
+  string ErrMsg = 4;
+}
+
+message GetMinAndMaxGroupSeqReq {
+  repeated string  groupIDList = 1;
+}
+
+message GetMinAndMaxGroupSeqItem {
+  string groupID = 1;
+  uint32 minSeq = 2;
+  uint32 maxSeq = 3;
+}
+message GetMinAndMaxGroupSeqResp {
+  repeated GetMinAndMaxGroupSeqItem groupSeqList = 1;
+  uint32 ErrCode = 2;
+  string ErrMsg = 3;
+}
+
+message SendMsgReq {
+  MsgData msgData = 1;
+}
+
+message SendMsgResp {
+  string clientMsgID = 1;
+  string serverMsgID = 2;
+  uint32 conversationType = 3;
+  string receiveID = 4;
+  uint32 contentType = 5;
+  int64  serverTime = 6;
+
+  int32 ErrCode = 7;
+  string ErrMsg = 8;
+}
+
+service Chat {
+  rpc GetMaxAndMinSeq(GetMinAndMaxSeqReq) returns(GetMinAndMaxSeqResp);
+  rpc GetMinAndMaxGroupSeq(GetMinAndMaxGroupSeqReq) returns(GetMinAndMaxGroupSeqResp);
+  rpc PullMessageBySeqList(PullMsgBySeqListReq) returns(PullMsgListResp);
+  rpc PullMessageByGroupSeqList(PullMsgByGroupSeqListReq) returns(PullMsgListResp);
+  rpc SendMsg(SendMsgReq) returns(SendMsgResp);
+}

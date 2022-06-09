@@ -1,0 +1,12 @@
+Name: imuser-rpc
+ListenOn: :10011
+
+Log:
+  ServiceName: imuser-rpc
+  Level: info
+
+Telemetry:
+  Name: imuser-rpc
+  Endpoint: http://192.168.1.98:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

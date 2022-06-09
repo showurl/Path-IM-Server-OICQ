@@ -1,0 +1,42 @@
+Name: msggateway-rpc
+ListenOn: :8080
+
+Log:
+  ServiceName: msggateway-rpc
+  Level: info
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 80
+  Path: /metrics
+
+Telemetry:
+  Name: msggateway-rpc
+  Endpoint: http://192.168.1.98:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+ImUserRpc:
+  Endpoints:
+    - 192.168.1.98:10011
+MsgPushRpc:
+  Endpoints:
+    - msgpush-rpc:8080
+SinglePushConsumer:
+  Brokers:
+    - 192.168.1.98:9092
+  Topic: im_msg_push_single
+  SinglePushGroupID: ""
+GroupPushConsumer:
+  Brokers:
+    - 192.168.1.98:9092
+  Topic: im_msg_push_group
+  GroupPushGroupID: ""
+Producer:
+  SinglePush:
+    Brokers:
+      - 192.168.1.98:9092
+    Topic: im_msg_push_single
+  GroupPush:
+    Brokers:
+      - 192.168.1.98:9092
+    Topic: im_msg_push_group
