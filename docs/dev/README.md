@@ -4,3 +4,6 @@
 - [编写imuser-rpc](day01/imuser-rpc.md)
 - [编写msg-rpc](day01/msg-rpc.md)
 - [简单测试](day01/simple-test.md)
+## 第二天
+- [拆分服务](day02/split-service.md)
+- [用户rpc注册和获取token](day02/user-rpc.md)

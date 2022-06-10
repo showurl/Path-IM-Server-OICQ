@@ -188,15 +188,6 @@ func (l *GetTokenLogic) GetToken(in *pb.GetTokenReq) (*pb.GetTokenResp, error) {
 
 ```
 
-### 用户名查询用户(1)
-
-### 用户信息查询(n)
-
-### 用户信息修改
-
-### 用户配置(kv存储)查询
-
-### 用户配置修改
 ---
 
-# 下一章：[群组模块](group-rpc.md)
+# 下一章：[用户rpc](../day03/user-rpc.md)
