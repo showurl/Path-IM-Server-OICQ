@@ -27,5 +27,11 @@ func NewIfAInBFriendListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 func (l *IfAInBFriendListLogic) IfAInBFriendList(in *pb.IfAInBFriendListReq) (*pb.IfAInBFriendListResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &pb.IfAInBFriendListResp{}, nil
+	return &pb.IfAInBFriendListResp{
+		CommonResp: &pb.CommonResp{
+			ErrCode: 0,
+			ErrMsg:  "",
+		},
+		IsInFriendList: true,
+	}, nil
 }

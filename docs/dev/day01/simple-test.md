@@ -195,3 +195,7 @@ go run app/imuser/rpc/imuser.go
 ### panic: proto: file "chat.proto" is already registered
 
 > 设置环境变量`GOLANG_PROTOBUF_REGISTRATION_CONFLICT`=`ignore`
+
+---
+
+# 下一章：[拆分服务](../day02/split-service.md)

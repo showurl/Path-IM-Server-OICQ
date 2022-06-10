@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package user;
+// 用户注册
+message RegisterReq {
+  // 用户名
+  string username = 1;
+  // 密码
+  string password = 2;
+}
+message RegisterResp {
+  // 用户id
+  string FailReason = 1;
+  string userId = 2;
+}
+// 用户获取token
+message GetTokenReq {
+  // 用户id
+  string userId = 1;
+  string platform = 2;
+}
+message GetTokenResp {
+  // token
+  string FailReason = 1;
+  string token = 2;
+}
+// 用户名查询用户(1)
+message GetUserByUsernameReq {
+  // 用户名
+  string username = 1;
+}
+message GetUserByUsernameResp {
+  // 用户id
+  string FailReason = 1;
+  bytes user = 2;
+}
+// 用户信息查询(n)
+message GetUserByIdsReq {
+  // 用户id
+  repeated string userId = 1;
+}
+message GetUserByIdsResp {
+  // 用户id
+  repeated bytes users = 1;
+}
+// 用户信息修改
+message UpdateUserReq {
+  // 用户id
+  string userId = 1;
+  map<string, string> updateMaps = 2;
+}
+message UpdateUserResp {
+  // 用户id
+  string FailReason = 1;
+}
+// 用户配置(kv存储)查询
+message GetUserConfigReq {
+  // 用户id
+  string userId = 1;
+  // 配置项
+  repeated string ks = 2;
+}
+message GetUserConfigResp {
+  // 用户id
+  string FailReason = 1;
+  // 配置项
+  map<string, string> configs = 2;
+}
+// 用户配置修改
+message UpdateUserConfigReq {
+  // 用户id
+  string userId = 1;
+  // 配置项
+  map<string, string> configs = 2;
+}
+message UpdateUserConfigResp {
+  // 用户id
+  string FailReason = 1;
+}
+
+service userService {
+  rpc Register(RegisterReq) returns (RegisterResp);
+  rpc GetToken(GetTokenReq) returns (GetTokenResp);
+  rpc GetUserByUsername(GetUserByUsernameReq) returns (GetUserByUsernameResp);
+  rpc GetUserByIds(GetUserByIdsReq) returns (GetUserByIdsResp);
+  rpc UpdateUser(UpdateUserReq) returns (UpdateUserResp);
+  rpc GetUserConfig(GetUserConfigReq) returns (GetUserConfigResp);
+  rpc UpdateUserConfig(UpdateUserConfigReq) returns (UpdateUserConfigResp);
+}

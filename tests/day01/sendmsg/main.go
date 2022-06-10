@@ -99,4 +99,33 @@ func main() {
 			UpdateConversation: true,
 		},
 	})
+	buf, _ = json.Marshal(map[string]string{
+		"Text": "给用户1发消息",
+	})
+	SendMsyByMsgData(&chatpb.MsgData{
+		ClientMsgID:      "2",
+		ConversationType: types.SingleChatType,
+		SendID:           "2",
+		ReceiveID:        "1",
+		ContentType:      0,
+		Content:          buf,
+		AtUserIDList:     nil,
+		OfflinePush: &chatpb.OfflinePush{
+			Title:         "2给你发了一条消息",
+			Desc:          "hello, I'm Path-IM 2",
+			Ex:            "时间：2018-01-01 12:00:00",
+			IOSPushSound:  "xx",
+			IOSBadgeCount: true,
+		},
+		ClientTime: time.Now().UnixMilli(),
+		ServerTime: 0,
+		Seq:        0,
+		MsgOptions: &chatpb.MsgOptions{
+			Persistent:         true,
+			History:            true,
+			UpdateUnreadCount:  true,
+			UpdateConversation: true,
+		},
+	})
+
 }

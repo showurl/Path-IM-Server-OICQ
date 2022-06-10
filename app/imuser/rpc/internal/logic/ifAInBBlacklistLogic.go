@@ -27,5 +27,11 @@ func NewIfAInBBlacklistLogic(ctx context.Context, svcCtx *svc.ServiceContext) *I
 func (l *IfAInBBlacklistLogic) IfAInBBlacklist(in *pb.IfAInBBlacklistReq) (*pb.IfAInBBlacklistResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &pb.IfAInBBlacklistResp{}, nil
+	return &pb.IfAInBBlacklistResp{
+		CommonResp: &pb.CommonResp{
+			ErrCode: 0,
+			ErrMsg:  "",
+		},
+		IsInBlacklist: false,
+	}, nil
 }
