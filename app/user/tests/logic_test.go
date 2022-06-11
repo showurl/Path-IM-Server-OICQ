@@ -24,7 +24,7 @@ func init() {
 }
 func TestRegister(t *testing.T) {
 	resp, err := service.Register(ctx, &pb.RegisterReq{
-		Username: fmt.Sprintf("test-%d", 1),
+		Username: fmt.Sprintf("test-%d", 2),
 		Password: "123456",
 	})
 	if err != nil {

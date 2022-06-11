@@ -13,24 +13,26 @@ import (
 )
 
 type (
-	AddGroupMemberReq       = pb.AddGroupMemberReq
-	AddGroupMemberResp      = pb.AddGroupMemberResp
-	CreateGroupReq          = pb.CreateGroupReq
-	CreateGroupResp         = pb.CreateGroupResp
-	DeleteGroupMemberReq    = pb.DeleteGroupMemberReq
-	DeleteGroupMemberResp   = pb.DeleteGroupMemberResp
-	DeleteGroupReq          = pb.DeleteGroupReq
-	DeleteGroupResp         = pb.DeleteGroupResp
-	GetGroupIdsReq          = pb.GetGroupIdsReq
-	GetGroupIdsResp         = pb.GetGroupIdsResp
-	GetGroupMemberModelReq  = pb.GetGroupMemberModelReq
-	GetGroupMemberModelResp = pb.GetGroupMemberModelResp
-	GetGroupMemberReq       = pb.GetGroupMemberReq
-	GetGroupMemberResp      = pb.GetGroupMemberResp
-	GetGroupReq             = pb.GetGroupReq
-	GetGroupResp            = pb.GetGroupResp
-	UpdateGroupReq          = pb.UpdateGroupReq
-	UpdateGroupResp         = pb.UpdateGroupResp
+	AddGroupMemberReq          = pb.AddGroupMemberReq
+	AddGroupMemberResp         = pb.AddGroupMemberResp
+	CreateGroupReq             = pb.CreateGroupReq
+	CreateGroupResp            = pb.CreateGroupResp
+	DeleteGroupMemberReq       = pb.DeleteGroupMemberReq
+	DeleteGroupMemberResp      = pb.DeleteGroupMemberResp
+	DeleteGroupReq             = pb.DeleteGroupReq
+	DeleteGroupResp            = pb.DeleteGroupResp
+	GetGroupIdsReq             = pb.GetGroupIdsReq
+	GetGroupIdsResp            = pb.GetGroupIdsResp
+	GetGroupMemberModelReq     = pb.GetGroupMemberModelReq
+	GetGroupMemberModelResp    = pb.GetGroupMemberModelResp
+	GetGroupMemberReq          = pb.GetGroupMemberReq
+	GetGroupMemberResp         = pb.GetGroupMemberResp
+	GetGroupReq                = pb.GetGroupReq
+	GetGroupResp               = pb.GetGroupResp
+	UpdateGroupMemberModelReq  = pb.UpdateGroupMemberModelReq
+	UpdateGroupMemberModelResp = pb.UpdateGroupMemberModelResp
+	UpdateGroupReq             = pb.UpdateGroupReq
+	UpdateGroupResp            = pb.UpdateGroupResp
 
 	GroupService interface {
 		CreateGroup(ctx context.Context, in *CreateGroupReq, opts ...grpc.CallOption) (*CreateGroupResp, error)
@@ -42,6 +44,7 @@ type (
 		AddGroupMember(ctx context.Context, in *AddGroupMemberReq, opts ...grpc.CallOption) (*AddGroupMemberResp, error)
 		DeleteGroupMember(ctx context.Context, in *DeleteGroupMemberReq, opts ...grpc.CallOption) (*DeleteGroupMemberResp, error)
 		GetGroupMemberModel(ctx context.Context, in *GetGroupMemberModelReq, opts ...grpc.CallOption) (*GetGroupMemberModelResp, error)
+		UpdateGroupMemberModel(ctx context.Context, in *UpdateGroupMemberModelReq, opts ...grpc.CallOption) (*UpdateGroupMemberModelResp, error)
 	}
 
 	defaultGroupService struct {
@@ -98,4 +101,9 @@ func (m *defaultGroupService) DeleteGroupMember(ctx context.Context, in *DeleteG
 func (m *defaultGroupService) GetGroupMemberModel(ctx context.Context, in *GetGroupMemberModelReq, opts ...grpc.CallOption) (*GetGroupMemberModelResp, error) {
 	client := pb.NewGroupServiceClient(m.cli.Conn())
 	return client.GetGroupMemberModel(ctx, in, opts...)
+}
+
+func (m *defaultGroupService) UpdateGroupMemberModel(ctx context.Context, in *UpdateGroupMemberModelReq, opts ...grpc.CallOption) (*UpdateGroupMemberModelResp, error) {
+	client := pb.NewGroupServiceClient(m.cli.Conn())
+	return client.UpdateGroupMemberModel(ctx, in, opts...)
 }

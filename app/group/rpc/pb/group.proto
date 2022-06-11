@@ -63,6 +63,14 @@ message GetGroupMemberModelReq {
 message GetGroupMemberModelResp {
   repeated bytes groupMembers = 1;
 }
+message UpdateGroupMemberModelReq {
+  string groupId = 1;
+  string userId = 2;
+  map<string, string> updateMap = 3;
+}
+message UpdateGroupMemberModelResp {
+  string FailedReason = 1;
+}
 service groupService {
   rpc CreateGroup(CreateGroupReq) returns (CreateGroupResp);
   rpc GetGroup(GetGroupReq) returns (GetGroupResp);
@@ -73,4 +81,5 @@ service groupService {
   rpc AddGroupMember(AddGroupMemberReq) returns (AddGroupMemberResp);
   rpc DeleteGroupMember(DeleteGroupMemberReq) returns (DeleteGroupMemberResp);
   rpc GetGroupMemberModel(GetGroupMemberModelReq) returns (GetGroupMemberModelResp);
+  rpc UpdateGroupMemberModel(UpdateGroupMemberModelReq) returns (UpdateGroupMemberModelResp);
 }

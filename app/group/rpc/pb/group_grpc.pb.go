@@ -31,6 +31,7 @@ type GroupServiceClient interface {
 	AddGroupMember(ctx context.Context, in *AddGroupMemberReq, opts ...grpc.CallOption) (*AddGroupMemberResp, error)
 	DeleteGroupMember(ctx context.Context, in *DeleteGroupMemberReq, opts ...grpc.CallOption) (*DeleteGroupMemberResp, error)
 	GetGroupMemberModel(ctx context.Context, in *GetGroupMemberModelReq, opts ...grpc.CallOption) (*GetGroupMemberModelResp, error)
+	UpdateGroupMemberModel(ctx context.Context, in *UpdateGroupMemberModelReq, opts ...grpc.CallOption) (*UpdateGroupMemberModelResp, error)
 }
 
 type groupServiceClient struct {
@@ -122,6 +123,15 @@ func (c *groupServiceClient) GetGroupMemberModel(ctx context.Context, in *GetGro
 	return out, nil
 }
 
+func (c *groupServiceClient) UpdateGroupMemberModel(ctx context.Context, in *UpdateGroupMemberModelReq, opts ...grpc.CallOption) (*UpdateGroupMemberModelResp, error) {
+	out := new(UpdateGroupMemberModelResp)
+	err := c.cc.Invoke(ctx, "/group.groupService/UpdateGroupMemberModel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GroupServiceServer is the server API for GroupService service.
 // All implementations must embed UnimplementedGroupServiceServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type GroupServiceServer interface {
 	AddGroupMember(context.Context, *AddGroupMemberReq) (*AddGroupMemberResp, error)
 	DeleteGroupMember(context.Context, *DeleteGroupMemberReq) (*DeleteGroupMemberResp, error)
 	GetGroupMemberModel(context.Context, *GetGroupMemberModelReq) (*GetGroupMemberModelResp, error)
+	UpdateGroupMemberModel(context.Context, *UpdateGroupMemberModelReq) (*UpdateGroupMemberModelResp, error)
 	mustEmbedUnimplementedGroupServiceServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedGroupServiceServer) DeleteGroupMember(context.Context, *Delet
 }
 func (UnimplementedGroupServiceServer) GetGroupMemberModel(context.Context, *GetGroupMemberModelReq) (*GetGroupMemberModelResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGroupMemberModel not implemented")
+}
+func (UnimplementedGroupServiceServer) UpdateGroupMemberModel(context.Context, *UpdateGroupMemberModelReq) (*UpdateGroupMemberModelResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGroupMemberModel not implemented")
 }
 func (UnimplementedGroupServiceServer) mustEmbedUnimplementedGroupServiceServer() {}
 
@@ -344,6 +358,24 @@ func _GroupService_GetGroupMemberModel_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GroupService_UpdateGroupMemberModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGroupMemberModelReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).UpdateGroupMemberModel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/group.groupService/UpdateGroupMemberModel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).UpdateGroupMemberModel(ctx, req.(*UpdateGroupMemberModelReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GroupService_ServiceDesc is the grpc.ServiceDesc for GroupService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGroupMemberModel",
 			Handler:    _GroupService_GetGroupMemberModel_Handler,
+		},
+		{
+			MethodName: "UpdateGroupMemberModel",
+			Handler:    _GroupService_UpdateGroupMemberModel_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

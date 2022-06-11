@@ -66,3 +66,8 @@ func (s *GroupServiceServer) GetGroupMemberModel(ctx context.Context, in *pb.Get
 	l := logic.NewGetGroupMemberModelLogic(ctx, s.svcCtx)
 	return l.GetGroupMemberModel(in)
 }
+
+func (s *GroupServiceServer) UpdateGroupMemberModel(ctx context.Context, in *pb.UpdateGroupMemberModelReq) (*pb.UpdateGroupMemberModelResp, error) {
+	l := logic.NewUpdateGroupMemberModelLogic(ctx, s.svcCtx)
+	return l.UpdateGroupMemberModel(in)
+}
