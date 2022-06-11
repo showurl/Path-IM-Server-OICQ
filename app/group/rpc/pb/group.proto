@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package group;
+message CreateGroupReq {
+  string name = 1;
+  repeated string members = 2;
+}
+message CreateGroupResp {
+  string FailedReason = 1;
+  string groupId = 2;
+}
+message GetGroupReq {
+  repeated string groupIds = 1;
+}
+message GetGroupResp {
+  repeated bytes groups = 1;
+}
+message UpdateGroupReq {
+  string groupId = 1;
+  string name = 2;
+}
+message UpdateGroupResp {
+  string FailedReason = 1;
+}
+message DeleteGroupReq {
+  string groupId = 1;
+}
+message DeleteGroupResp {
+  string FailedReason = 1;
+}
+message GetGroupMemberReq {
+  string groupId = 1;
+}
+message GetGroupMemberResp {
+  repeated string members = 1;
+}
+message GetGroupIdsReq {
+  string userId = 1;
+}
+message GetGroupIdsResp {
+  repeated string groupIds = 1;
+}
+message AddGroupMemberReq {
+  string groupId = 1;
+  string member = 2;
+}
+message AddGroupMemberResp {
+  string FailedReason = 1;
+}
+message DeleteGroupMemberReq {
+  string groupId = 1;
+  string member = 2;
+}
+message DeleteGroupMemberResp {
+  string FailedReason = 1;
+}
+message GetGroupMemberModelReq {
+  repeated string groupIds = 1;
+  string userId = 2;
+}
+message GetGroupMemberModelResp {
+  repeated bytes groupMembers = 1;
+}
+service groupService {
+  rpc CreateGroup(CreateGroupReq) returns (CreateGroupResp);
+  rpc GetGroup(GetGroupReq) returns (GetGroupResp);
+  rpc UpdateGroup(UpdateGroupReq) returns (UpdateGroupResp);
+  rpc DeleteGroup(DeleteGroupReq) returns (DeleteGroupResp);
+  rpc GetGroupMember(GetGroupMemberReq) returns (GetGroupMemberResp);
+  rpc GetGroupIds(GetGroupIdsReq) returns (GetGroupIdsResp);
+  rpc AddGroupMember(AddGroupMemberReq) returns (AddGroupMemberResp);
+  rpc DeleteGroupMember(DeleteGroupMemberReq) returns (DeleteGroupMemberResp);
+  rpc GetGroupMemberModel(GetGroupMemberModelReq) returns (GetGroupMemberModelResp);
+}

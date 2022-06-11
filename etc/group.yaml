@@ -1,0 +1,24 @@
+Name: group-rpc
+ListenOn: 0.0.0.0:10014
+Log:
+  ServiceName: group-rpc
+  Level: info
+Telemetry:
+  Name: group-rpc
+  Endpoint: http://192.168.1.98:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+Mysql:
+  Addr: "root:123456@tcp(127.0.0.1:3306)/oicq?charset=utf8mb4&parseTime=True&loc=Local&timeout=20s&readTimeout=20s&writeTimeout=20s"
+  MaxIdleConns: 10
+  MaxOpenConns: 10
+  LogLevel: info
+Redis:
+  Host: 192.168.1.98:6379
+  Type: node
+  Pass: "123456"
+  Tls: false
+RedisDB: 11
+MsgGatewayRpc:
+  Endpoints:
+    - 192.168.1.98:10001
