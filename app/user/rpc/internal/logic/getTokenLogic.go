@@ -46,7 +46,7 @@ func (l *GetTokenLogic) GetToken(in *pb.GetTokenReq) (*pb.GetTokenResp, error) {
 			switch status {
 			case "0":
 				// 改为过期
-				err = l.svcCtx.Redis.HSet(l.ctx, redisKey, token, "1").Err()
+				err = l.svcCtx.Redis.HSet(context.Background(), redisKey, token, "1").Err()
 				if err != nil {
 					l.Errorf("redis hset error: %v", err)
 					return nil, err

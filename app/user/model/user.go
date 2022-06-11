@@ -1,12 +1,14 @@
 package usermodel
 
 import (
+	"encoding/json"
 	"github.com/Path-IM/Path-IM-Server/common/utils/encrypt"
 	"github.com/Path-IM/Path-IM-Server/common/xcache/dc"
 	"github.com/Path-IM/Path-IM-Server/common/xorm/global"
 	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/core/logx"
 	"gorm.io/gorm"
+	"time"
 )
 
 func (u *User) FuncInsert(rc redis.UniversalClient) func(tx *gorm.DB) error {
@@ -66,6 +68,7 @@ func (u *User) BeforeCreate(_ *gorm.DB) error {
 	if u.Password != "" {
 		u.Password = encrypt.Md5(u.Password)
 	}
+	u.RegisterTime = time.Now().UnixMilli()
 	return nil
 }
 
@@ -75,4 +78,8 @@ func (u *User) GetIdString() string {
 
 func (u *User) TableName() string {
 	return "users"
+}
+func (u *User) Bytes() []byte {
+	buf, _ := json.Marshal(u)
+	return buf
 }

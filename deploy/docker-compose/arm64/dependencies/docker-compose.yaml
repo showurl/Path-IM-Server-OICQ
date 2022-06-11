@@ -81,6 +81,8 @@ services:
       # 时区上海
       TZ: Asia/Shanghai
     restart: always
+    volumes:
+      - ./data/zookeeper:/data
     ports:
       - "2181:2181"
     networks:
@@ -106,6 +108,7 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/kafka:/kafka
     networks:
       pathim_dep_net:
         ipv4_address: 172.25.2.9

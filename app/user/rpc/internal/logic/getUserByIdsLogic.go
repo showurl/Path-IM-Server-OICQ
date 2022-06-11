@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/Path-IM/Path-IM-Server/common/xcache/dc"
+	usermodel "github.com/showurl/Path-IM-Server-OICQ/app/user/model"
 
 	"github.com/showurl/Path-IM-Server-OICQ/app/user/rpc/internal/svc"
 	"github.com/showurl/Path-IM-Server-OICQ/app/user/rpc/pb"
@@ -24,7 +26,16 @@ func NewGetUserByIdsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetU
 }
 
 func (l *GetUserByIdsLogic) GetUserByIds(in *pb.GetUserByIdsReq) (*pb.GetUserByIdsResp, error) {
-	// todo: add your logic here and delete this line
-
-	return &pb.GetUserByIdsResp{}, nil
+	mapping := dc.GetDbMapping(l.svcCtx.Redis, l.svcCtx.Mysql)
+	var users []*usermodel.User
+	var userBytes [][]byte
+	err := mapping.ListByIds(&usermodel.User{}, &users, in.UserId)
+	if err != nil {
+		l.Errorf("get user by ids error: %v", err)
+		return &pb.GetUserByIdsResp{}, err
+	}
+	for _, user := range users {
+		userBytes = append(userBytes, user.Bytes())
+	}
+	return &pb.GetUserByIdsResp{Users: userBytes}, nil
 }

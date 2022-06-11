@@ -34,6 +34,7 @@ docker-compose up -d
 - im_msg
 - im_msg_push_single
 - im_msg_push_group
+- kick_conn
 
 ## 3、Server
 
