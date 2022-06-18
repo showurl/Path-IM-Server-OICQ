@@ -1,0 +1,28 @@
+syntax = "v1"
+
+info(
+	title: "im api"
+	desc: ""
+	author: "showurl"
+	email: "showurl@163.com"
+	version: "v1.0"
+)
+type LoginReq {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+type LoginResp {
+	Token string `json:"token"`
+	Uid   string `json:"uid"`
+}
+@server(
+	group: imuser
+	prefix: /v1
+)
+service api {
+	@doc(
+		summary: "注册登录"
+	)
+	@handler login
+	post /white/login (LoginReq) returns (LoginResp)
+}

@@ -35,6 +35,8 @@ func (l *RegisterLogic) Register(in *pb.RegisterReq) (*pb.RegisterResp, error) {
 	err := xorm.Transaction(l.svcCtx.Mysql,
 		// 插入用户
 		user.FuncInsert(l.svcCtx.Redis),
+		// 加入群聊
+
 		// 清除用户相关的缓存
 		func(tx *gorm.DB) error {
 			err := user.FlushCache(l.svcCtx.Mysql, l.svcCtx.Redis)

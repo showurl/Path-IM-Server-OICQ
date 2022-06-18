@@ -2,6 +2,8 @@ package tests
 
 import (
 	"context"
+	"github.com/golang/protobuf/proto"
+	chatpb "github.com/showurl/Path-IM-Server-OICQ/app/msg/rpc/pb"
 	"github.com/showurl/Path-IM-Server-OICQ/app/relation/rpc/relationservice"
 	"github.com/zeromicro/go-zero/zrpc"
 	"testing"
@@ -119,4 +121,12 @@ func TestGetFriend(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Log(resp2.String())
+}
+func Test2(t *testing.T) {
+	data := &chatpb.MsgData{
+		ClientMsgID: "发个广告",
+	}
+	buf, _ := proto.Marshal(data)
+	t.Log(data.String())
+	t.Log(string(buf))
 }
